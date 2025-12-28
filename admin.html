@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>FAQs — Obento</title>
+    <title>Admin — VC’s Obento</title>
     <link rel="stylesheet" href="assets/css/style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
@@ -10,7 +10,7 @@
 
 <header class="navbar">
     <div class="container">
-        <div class="logo">VC’s Obento</div>
+        <div class="logo">VC’s Obento — Admin</div>
 
         <button class="menu-toggle" onclick="toggleMenu()">☰</button>
 
@@ -20,50 +20,93 @@
             <a href="order.html">Orders</a>
             <a href="faq.html">FAQs</a>
             <a href="dashboard.html">Dashboard</a>
-            <a href="admin.html">Admin</a>
+            <a href="admin.html" class="active">Admin</a>
 
-            <!-- Auth UI -->
             <span id="user-info" style="margin-left:15px; font-weight:600;"></span>
             <a href="login.html" class="btn secondary" id="login-btn">Login</a>
             <a href="#" id="logout-btn" style="display:none;" onclick="logout()">Logout</a>
         </nav>
-
     </div>
 </header>
 
-<section class="container" style="padding:120px 0 80px;">
-    <h1 style="font-size:48px; margin-bottom:30px;">Frequently Asked Questions</h1>
+<!-- ADMIN CONTENT -->
+<section id="admin-content" class="container" style="padding:120px 0;">
+    <h1>Admin Dashboard</h1>
 
-    <div class="faq-item">
-        <h3>How do subscriptions work?</h3>
-        <p>You can subscribe weekly or monthly and modify meals anytime before midnight.</p>
-    </div>
+    <div class="admin-panel">
+        <input type="text" id="mealName" placeholder="Meal name">
+        <input type="number" id="mealPrice" placeholder="Price">
+        <button onclick="addMeal()">Add Meal</button>
 
-    <div class="faq-item">
-        <h3>Can I pause or cancel anytime?</h3>
-        <p>Yes — complete flexibility, no contracts, no commitments.</p>
-    </div>
-
-    <div class="faq-item">
-        <h3>How are meals delivered?</h3>
-        <p>Meals are delivered warm directly to your child’s classroom during recess.</p>
-    </div>
-
-    <div class="faq-item">
-        <h3>Are meals healthy?</h3>
-        <p>Absolutely. All meals are freshly prepared, nutritious and kid-approved.</p>
+        <h3 style="margin-top:30px;">Menu Preview</h3>
+        <div id="adminMeals"></div>
     </div>
 </section>
 
-<footer>
-    <p>© 2025 Obento</p>
-</footer>
+<!-- NO ACCESS MESSAGE -->
+<section id="no-access" class="container" style="padding:120px 0; display:none;">
+    <div class="access-banner">
+        You need admin access for this.
+    </div>
+</section>
+
+<!-- UI Scripts -->
 <script>
     function toggleMenu() {
       const nav = document.getElementById("nav-links");
       nav.style.display = nav.style.display === "block" ? "none" : "block";
     }
+
+    // Admin meals logic
+    let adminMeals = JSON.parse(localStorage.getItem("adminMeals")) || [];
+
+    function renderAdminMeals() {
+      const box = document.getElementById("adminMeals");
+      box.innerHTML = "";
+
+      adminMeals.forEach((m, i) => {
+        box.innerHTML += `
+          <div class="cart-item">
+            ${m.name} — ₹${m.price}
+            <button onclick="removeMeal(${i})">❌</button>
+          </div>
+        `;
+      });
+
+      localStorage.setItem("adminMeals", JSON.stringify(adminMeals));
+    }
+
+    function addMeal() {
+      const name = mealName.value.trim();
+      const price = mealPrice.value.trim();
+
+      if (!name || !price) {
+        alert("Enter meal name and price");
+        return;
+      }
+
+      adminMeals.push({
+        id: Date.now(),
+        name,
+        price,
+        img: "assets/images/meal1.jpg"
+      });
+
+      mealName.value = "";
+      mealPrice.value = "";
+
+      renderAdminMeals();
+    }
+
+    function removeMeal(i) {
+      adminMeals.splice(i, 1);
+      renderAdminMeals();
+    }
+
+    renderAdminMeals();
 </script>
+
+<!-- FIREBASE AUTH + ADMIN PROTECTION -->
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
     import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-auth.js";
@@ -80,12 +123,15 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
+    // 🔐 CHANGE THIS
+    const ADMIN_EMAIL = "admin@gmail.com";
+
     onAuthStateChanged(auth, (user) => {
+      const adminContent = document.getElementById("admin-content");
+      const noAccess = document.getElementById("no-access");
       const userInfo = document.getElementById("user-info");
       const loginBtn = document.getElementById("login-btn");
       const logoutBtn = document.getElementById("logout-btn");
-
-      if (!userInfo || !loginBtn || !logoutBtn) return;
 
       if (user) {
         userInfo.textContent = user.email;
@@ -95,6 +141,14 @@
         userInfo.textContent = "";
         loginBtn.style.display = "inline";
         logoutBtn.style.display = "none";
+      }
+
+      if (!user || user.email !== ADMIN_EMAIL) {
+        adminContent.style.display = "none";
+        noAccess.style.display = "block";
+      } else {
+        adminContent.style.display = "block";
+        noAccess.style.display = "none";
       }
     });
 

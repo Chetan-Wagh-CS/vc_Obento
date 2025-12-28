@@ -1,18 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>VC's Obento — School Meals Done Right</title>
+    <title>Dashboard — VC’s Obento</title>
     <link rel="stylesheet" href="assets/css/style.css">
-    <meta name="description" content="VC’s Obento – School meals parents trust and kids love. Order healthy meals online with flexible plans.">
-    <meta name="keywords" content="school meals, healthy kids food, lunch delivery, VC’s Obento, meal subscription">
-    <meta name="author" content="VC’s Obento">
-
-    <meta property="og:title" content="VC’s Obento | School Meals Done Right">
-    <meta property="og:description" content="Fresh, nutritious school meals delivered with care.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://chetan-wagh-cs.github.io/vc_Obento/">
-
 </head>
 <body>
 
@@ -39,60 +30,68 @@
     </div>
 </header>
 
+<section class="container" style="padding:120px 0;">
+    <h1>Your Subscription</h1>
 
-<section class="hero">
-    <div class="hero-bg"></div>
-    <div class="container hero-content">
-        <h1>School Meals<br><span>Done Right!</span></h1>
-        <p>Food parents feel good about and kids absolutely love.</p>
-        <a class="cta" href="order.html">Get Started</a>
+    <div class="subscription-card">
+        <h3>Weekly Meal Plan</h3>
+        <p>Delivery: Monday to Friday</p>
+        <p>Status: <strong>Active</strong></p>
+
+        <div class="sub-actions">
+            <button onclick="pauseSub()">Pause</button>
+            <button onclick="swapMeal()">Swap Meal</button>
+            <button class="danger" onclick="cancelSub()">Cancel</button>
+        </div>
+    </div>
+
+    <h2 style="margin-top:50px;">Order History</h2>
+
+    <div class="order-history">
+        <div class="order-item">Order #1024 — ₹700 — Completed</div>
+        <div class="order-item">Order #1023 — ₹700 — Completed</div>
     </div>
 </section>
 
 
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js"></script>
 
-<section class="features container">
-    <div class="feature-card">
-        <div class="icon">🍱</div>
-        <h3>Order Online</h3>
-        <p>Opt for a single meal or subscribe and save</p>
-    </div>
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-auth.js";
 
-    <div class="feature-card">
-        <div class="icon">🚚</div>
-        <h3>Meals Delivered</h3>
-        <p>Warm meals delivered directly to the classroom</p>
-    </div>
+    const firebaseConfig = {
+      apiKey: "AIzaSyBgMCAlUUUuz5D-cliftUQQ3wZR9N-PDDE",
+      authDomain: "vc-obento.firebaseapp.com",
+      projectId: "vc-obento",
+      storageBucket: "vc-obento.firebasestorage.app",
+      messagingSenderId: "971398490066",
+      appId: "1:971398490066:web:d12391c07e29bce45b0a0b"
+    };
 
-    <div class="feature-card">
-        <div class="icon">🔄</div>
-        <h3>Complete Flexibility</h3>
-        <p>Change, pause or cancel anytime before midnight</p>
-    </div>
-</section>
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
 
-<section class="gallery container">
-    <div class="gallery-text">
-        <h2>We feed your kids like our own</h2>
-        <p>Fresh, nutritious meals crafted with care and delivered with love.</p>
-    </div>
+    onAuthStateChanged(auth, (user) => {
+      if (!user) window.location.href = "login.html";
+    });
 
-    <div class="gallery-images">
-        <img src="assets/images/food1.png" class="img1">
-        <img src="assets/images/food2.png" class="img2">
-        <img src="assets/images/food3.png" class="img3">
-        <img src="assets/images/food4.png" class="img4">
-    </div>
-</section>
-
-
-<footer>
-    <p>© 2025 Obento</p>
-</footer>
+    window.logout = function() {
+      signOut(auth).then(() => window.location.href = "login.html");
+    };
+</script>
 <script>
-    function toggleMenu() {
-      const nav = document.getElementById("nav-links");
-      nav.style.display = nav.style.display === "block" ? "none" : "block";
+    function pauseSub() {
+      alert("Subscription paused (demo)");
+    }
+
+    function swapMeal() {
+      alert("Meal swap opened (demo)");
+    }
+
+    function cancelSub() {
+      alert("Subscription cancelled (demo)");
     }
 </script>
 <script type="module">
@@ -133,6 +132,7 @@
       signOut(auth).then(() => location.href = "login.html");
     };
 </script>
+
 
 </body>
 </html>

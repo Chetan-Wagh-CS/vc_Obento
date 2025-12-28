@@ -6,29 +6,43 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js"></script>
+
 <body>
 
 <header class="navbar">
     <div class="container">
-        <div class="logo">VC's Obento</div>
+        <div class="logo">VC’s Obento</div>
+
         <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+
         <nav id="nav-links">
             <a href="index.html">Home</a>
+            <a href="menu.html">Menu</a>
+            <a href="order.html">Orders</a>
             <a href="faq.html">FAQs</a>
-            <a href="order.html" class="btn">Order Now</a>
-            <a href="login.html" class="btn secondary">Login</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="admin.html">Admin</a>
+
+            <!-- Auth UI -->
+            <span id="user-info" style="margin-left:15px; font-weight:600;"></span>
+            <a href="login.html" class="btn secondary" id="login-btn">Login</a>
+            <a href="#" id="logout-btn" style="display:none;" onclick="logout()">Logout</a>
         </nav>
+
     </div>
 </header>
 
 <section class="container" style="padding:120px 0; max-width:500px;">
     <h1 style="font-size:42px; margin-bottom:30px;">Login to VC's Obento</h1>
 
-    <form class="login-form">
-        <input type="email" placeholder="Email" required>
-        <input type="password" placeholder="Password" required>
-        <button class="cta" type="submit">Login</button>
+    <form class="login-form" onsubmit="login(event)">
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <button class="cta" type="submit">Login / Register</button>
     </form>
+
 </section>
 
 <footer>
@@ -40,6 +54,98 @@
       nav.style.display = nav.style.display === "block" ? "none" : "block";
     }
 </script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js"></script>
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
+    import {
+      getAuth,
+      createUserWithEmailAndPassword,
+      signInWithEmailAndPassword,
+      onAuthStateChanged
+    } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBgMCAlUUUuz5D-cliftUQQ3wZR9N-PDDE",
+      authDomain: "vc-obento.firebaseapp.com",
+      projectId: "vc-obento",
+      storageBucket: "vc-obento.firebasestorage.app",
+      messagingSenderId: "971398490066",
+      appId: "1:971398490066:web:d12391c07e29bce45b0a0b"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // If already logged in, go directly to dashboard
+    onAuthStateChanged(auth, (user) => {
+      if (user) window.location.href = "dashboard.html";
+    });
+
+    window.login = async function(e) {
+      e.preventDefault();
+
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+      } catch {
+        await createUserWithEmailAndPassword(auth, email, password);
+      }
+    };
+</script>
+
+<script>
+    function login(e) {
+      e.preventDefault();
+      const email = email.value;
+      const password = password.value;
+
+      auth.signInWithEmailAndPassword(email, password)
+        .catch(() => auth.createUserWithEmailAndPassword(email, password))
+        .then(() => window.location.href = "dashboard.html");
+    }
+</script>
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBgMCAlUUUuz5D-cliftUQQ3wZR9N-PDDE",
+      authDomain: "vc-obento.firebaseapp.com",
+      projectId: "vc-obento",
+      storageBucket: "vc-obento.firebasestorage.app",
+      messagingSenderId: "971398490066",
+      appId: "1:971398490066:web:d12391c07e29bce45b0a0b"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    onAuthStateChanged(auth, (user) => {
+      const userInfo = document.getElementById("user-info");
+      const loginBtn = document.getElementById("login-btn");
+      const logoutBtn = document.getElementById("logout-btn");
+
+      if (!userInfo || !loginBtn || !logoutBtn) return;
+
+      if (user) {
+        userInfo.textContent = user.email;
+        loginBtn.style.display = "none";
+        logoutBtn.style.display = "inline";
+      } else {
+        userInfo.textContent = "";
+        loginBtn.style.display = "inline";
+        logoutBtn.style.display = "none";
+      }
+    });
+
+    window.logout = function() {
+      signOut(auth).then(() => location.href = "login.html");
+    };
+</script>
+
 
 </body>
 </html>

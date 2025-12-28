@@ -2,26 +2,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>VC's Obento — School Meals Done Right</title>
+    <title>Menu — VC’s Obento</title>
     <link rel="stylesheet" href="assets/css/style.css">
-    <meta name="description" content="VC’s Obento – School meals parents trust and kids love. Order healthy meals online with flexible plans.">
-    <meta name="keywords" content="school meals, healthy kids food, lunch delivery, VC’s Obento, meal subscription">
-    <meta name="author" content="VC’s Obento">
-
-    <meta property="og:title" content="VC’s Obento | School Meals Done Right">
-    <meta property="og:description" content="Fresh, nutritious school meals delivered with care.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://chetan-wagh-cs.github.io/vc_Obento/">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
+<div class="cart" id="cart">
+    <h3>Your Cart</h3>
+    <div id="cartItems"></div>
+    <div class="cart-total">
+        Total: ₹<span id="cartTotal">0</span>
+    </div>
+    <button class="cta" onclick="checkout()">Checkout</button>
+</div>
+
 <body>
 
 <header class="navbar">
     <div class="container">
         <div class="logo">VC’s Obento</div>
-
         <button class="menu-toggle" onclick="toggleMenu()">☰</button>
-
         <nav id="nav-links">
             <a href="index.html">Home</a>
             <a href="menu.html">Menu</a>
@@ -39,56 +38,31 @@
     </div>
 </header>
 
+<section class="container" style="padding:120px 0;">
+    <div class="location-box">
+        <label>Select your City</label>
+        <select id="citySelect" onchange="saveLocation()">
+            <option value="">Choose City</option>
+            <option value="Mumbai">Mumbai</option>
+            <option value="Pune">Pune</option>
+            <option value="Nagpur">Nagpur</option>
+        </select>
 
-<section class="hero">
-    <div class="hero-bg"></div>
-    <div class="container hero-content">
-        <h1>School Meals<br><span>Done Right!</span></h1>
-        <p>Food parents feel good about and kids absolutely love.</p>
-        <a class="cta" href="order.html">Get Started</a>
+        <label>Select your School</label>
+        <select id="schoolSelect" onchange="saveLocation()">
+            <option value="">Choose School</option>
+            <option value="Elpro International School">Elpro International School</option>
+            <option value="Podar International School">Podar International School</option>
+            <option value="Hilltop Academy">Hilltop Academy</option>
+        </select>
     </div>
+
+    <h1>Our Menu</h1>
+    <div class="meal-grid" id="mealGrid"></div>
 </section>
 
+<script src="assets/js/menu.js"></script>
 
-
-<section class="features container">
-    <div class="feature-card">
-        <div class="icon">🍱</div>
-        <h3>Order Online</h3>
-        <p>Opt for a single meal or subscribe and save</p>
-    </div>
-
-    <div class="feature-card">
-        <div class="icon">🚚</div>
-        <h3>Meals Delivered</h3>
-        <p>Warm meals delivered directly to the classroom</p>
-    </div>
-
-    <div class="feature-card">
-        <div class="icon">🔄</div>
-        <h3>Complete Flexibility</h3>
-        <p>Change, pause or cancel anytime before midnight</p>
-    </div>
-</section>
-
-<section class="gallery container">
-    <div class="gallery-text">
-        <h2>We feed your kids like our own</h2>
-        <p>Fresh, nutritious meals crafted with care and delivered with love.</p>
-    </div>
-
-    <div class="gallery-images">
-        <img src="assets/images/food1.png" class="img1">
-        <img src="assets/images/food2.png" class="img2">
-        <img src="assets/images/food3.png" class="img3">
-        <img src="assets/images/food4.png" class="img4">
-    </div>
-</section>
-
-
-<footer>
-    <p>© 2025 Obento</p>
-</footer>
 <script>
     function toggleMenu() {
       const nav = document.getElementById("nav-links");
