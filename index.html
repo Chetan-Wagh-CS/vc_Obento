@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Obento – Healthy Meals</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        html{scroll-behavior:smooth}
+        body{margin:0;font-family:'Inter',Arial,sans-serif;background:#fff;color:#222}
+
+        header{
+        position:sticky;
+        top:0;
+        z-index:1000;
+        padding:18px 60px;
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        background:white;
+        box-shadow:0 4px 12px rgba(0,0,0,.05)
+        }
+
+        nav a{margin:0 16px;text-decoration:none;color:#222;font-weight:500}
+        .btn{background:#ff5a2c;color:#fff;padding:10px 22px;border-radius:22px;text-decoration:none;font-size:.95rem;cursor:pointer}
+
+        .hero{display:grid;grid-template-columns:1.1fr .9fr;padding:70px 60px;background:#fff7f2;align-items:center;gap:30px}
+        .hero h1{font-size:2.6rem;line-height:1.2;margin-bottom:15px}
+        .hero p{font-size:1.05rem;margin-bottom:20px;max-width:460px}
+        .hero img{width:100%;max-width:420px;border-radius:18px}
+
+        .features{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;padding:70px 60px}
+        .card{background:#fff;padding:28px;border-radius:18px;box-shadow:0 10px 25px rgba(0,0,0,.08);text-align:center}
+        .card h3{margin-bottom:8px;font-size:1.1rem}
+
+        .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;padding:0 60px 70px}
+        .gallery img{width:100%;height:220px;object-fit:cover;border-radius:16px}
+
+        .faq{max-width:900px;margin:auto;padding:60px}
+        .faq h2{margin-bottom:20px}
+        .faq p{line-height:1.6}
+
+        footer{background:#111;color:#eee;text-align:center;padding:40px;font-size:.9rem}
+
+        .fade-in{opacity:0;transform:translateY(30px);transition:.6s ease}
+        .fade-in.show{opacity:1;transform:translateY(0)}
+
+        @media(max-width:900px){
+        .hero{grid-template-columns:1fr;padding:50px 30px}
+        .hero img{max-width:100%}
+        .features{grid-template-columns:1fr;padding:50px 30px}
+        .gallery{grid-template-columns:1fr;padding:0 30px 50px}
+        header{padding:18px 30px}
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div><strong>Obento</strong></div>
+    <nav>
+        <a href="#">Home</a>
+        <a href="#faq">FAQs</a>
+        <a href="#">Contact</a>
+        <a class="btn" onclick="openOrder()">Order Now</a>
+    </nav>
+</header>
+
+<section class="hero fade-in">
+    <div>
+        <h1>Healthy School Meals, Made Easy</h1>
+        <p>Nutritious, delicious meals delivered fresh every day.</p>
+        <a class="btn" onclick="openOrder()">Start Ordering</a>
+    </div>
+    <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c" alt="Healthy meal">
+</section>
+
+<section class="features fade-in">
+    <div class="card"><h3>Fresh Ingredients</h3><p>Only natural food.</p></div>
+    <div class="card"><h3>Flexible Plans</h3><p>Daily & monthly options.</p></div>
+    <div class="card"><h3>On-Time Delivery</h3><p>Always on schedule.</p></div>
+</section>
+
+<section class="gallery fade-in">
+    <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe">
+    <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836">
+    <img src="https://images.unsplash.com/photo-1551218808-94e220e084d2">
+</section>
+
+<section class="faq fade-in" id="faq">
+    <h2>FAQs</h2>
+    <p><b>What meals do you offer?</b><br>Balanced vegetarian meals.</p>
+    <p><b>Do you offer subscriptions?</b><br>Yes, daily & monthly plans.</p>
+</section>
+
+<footer>
+    <p>© 2025 Obento | hello@obento.in</p>
+</footer>
+
+<!-- ORDER MODAL -->
+<div id="orderModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);z-index:2000;">
+    <div style="background:#fff;padding:30px;border-radius:18px;max-width:400px;margin:100px auto;text-align:center">
+        <h2>Place Your Order</h2>
+        <input placeholder="Name" style="width:100%;padding:10px;margin:10px 0">
+        <input placeholder="Phone" style="width:100%;padding:10px;margin:10px 0">
+        <input placeholder="School" style="width:100%;padding:10px;margin:10px 0">
+        <br><br>
+        <button class="btn" onclick="closeOrder()">Submit</button>
+    </div>
+</div>
+
+<!-- WHATSAPP BUTTON -->
+<a href="https://wa.me/919000000000" target="_blank"
+   style="position:fixed;bottom:20px;right:20px;background:#25D366;color:white;
+padding:14px 20px;border-radius:50px;font-weight:bold;text-decoration:none;
+box-shadow:0 10px 20px rgba(0,0,0,.2)">
+    Chat on WhatsApp
+</a>
+
+<script>
+    function openOrder(){document.getElementById("orderModal").style.display="block"}
+    function closeOrder(){document.getElementById("orderModal").style.display="none"}
+
+    const items=document.querySelectorAll('.fade-in')
+    window.addEventListener('scroll',()=>{
+    items.forEach(el=>{
+       if(el.getBoundingClientRect().top < window.innerHeight-100)
+         el.classList.add('show')
+    })
+    })
+</script>
+
+</body>
+</html>
