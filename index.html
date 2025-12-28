@@ -4,14 +4,23 @@
     <meta charset="UTF-8">
     <title>VC's Obento — School Meals Done Right</title>
     <link rel="stylesheet" href="assets/css/style.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="VC’s Obento – School meals parents trust and kids love. Order healthy meals online with flexible plans.">
+    <meta name="keywords" content="school meals, healthy kids food, lunch delivery, VC’s Obento, meal subscription">
+    <meta name="author" content="VC’s Obento">
+
+    <meta property="og:title" content="VC’s Obento | School Meals Done Right">
+    <meta property="og:description" content="Fresh, nutritious school meals delivered with care.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://chetan-wagh-cs.github.io/vc_Obento/">
+
 </head>
 <body>
 
 <header class="navbar">
     <div class="container">
         <div class="logo">VC's Obento</div>
-        <nav>
+        <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+        <nav id="nav-links">
             <a href="index.html">Home</a>
             <a href="faq.html">FAQs</a>
             <a href="order.html" class="btn">Order Now</a>
@@ -21,27 +30,36 @@
 </header>
 
 <section class="hero">
-    <div class="container">
+    <div class="hero-bg"></div>
+    <div class="container hero-content">
         <h1>School Meals<br><span>Done Right!</span></h1>
         <p>Food parents feel good about and kids absolutely love.</p>
         <a class="cta" href="order.html">Get Started</a>
     </div>
 </section>
 
+
+
 <section class="features container">
-    <div class="feature">
+    <div class="feature-card">
+        <div class="icon">🍱</div>
         <h3>Order Online</h3>
         <p>Opt for a single meal or subscribe and save</p>
     </div>
-    <div class="feature">
+
+    <div class="feature-card">
+        <div class="icon">🚚</div>
         <h3>Meals Delivered</h3>
-        <p>Warm meals delivered during recess</p>
+        <p>Warm meals delivered directly to the classroom</p>
     </div>
-    <div class="feature">
+
+    <div class="feature-card">
+        <div class="icon">🔄</div>
         <h3>Complete Flexibility</h3>
-        <p>Change, pause or cancel by midnight</p>
+        <p>Change, pause or cancel anytime before midnight</p>
     </div>
 </section>
+
 <section class="gallery container">
     <div class="gallery-text">
         <h2>We feed your kids like our own</h2>
@@ -60,6 +78,13 @@
 <footer>
     <p>© 2025 Obento</p>
 </footer>
+<script>
+    function toggleMenu() {
+      const nav = document.getElementById("nav-links");
+      nav.style.display = nav.style.display === "block" ? "none" : "block";
+    }
+</script>
+
 
 </body>
 </html>

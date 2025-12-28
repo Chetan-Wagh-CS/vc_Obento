@@ -11,7 +11,8 @@
 <header class="navbar">
     <div class="container">
         <div class="logo">VC's Obento</div>
-        <nav>
+        <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+        <nav id="nav-links">
             <a href="index.html">Home</a>
             <a href="faq.html">FAQs</a>
             <a href="order.html" class="btn">Order Now</a>
@@ -25,29 +26,42 @@
     <p style="margin-bottom:40px; color:#555;">Choose a plan that works best for your family</p>
 
     <div class="plans">
+
         <div class="plan">
             <h3>Single Meal</h3>
-            <p>₹150 / meal</p>
-            <a href="#" class="cta">Choose</a>
+            <div class="price">₹150</div>
+            <p>Perfect for trying us out</p>
+            <a href="#" class="cta">Choose Plan</a>
         </div>
 
         <div class="plan popular">
+            <div class="badge">Most Popular</div>
             <h3>Weekly Plan</h3>
-            <p>₹700 / week</p>
-            <a href="#" class="cta">Most Popular</a>
+            <div class="price">₹700</div>
+            <p>Best value for families</p>
+            <a href="#" class="cta">Choose Plan</a>
         </div>
 
         <div class="plan">
             <h3>Monthly Plan</h3>
-            <p>₹2600 / month</p>
-            <a href="#" class="cta">Choose</a>
+            <div class="price">₹2600</div>
+            <p>Maximum savings</p>
+            <a href="#" class="cta">Choose Plan</a>
         </div>
+
     </div>
+
 </section>
 
 <footer>
     <p>© 2025 Obento</p>
 </footer>
+<script>
+    function toggleMenu() {
+      const nav = document.getElementById("nav-links");
+      nav.style.display = nav.style.display === "block" ? "none" : "block";
+    }
+</script>
 
 </body>
 </html>

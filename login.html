@@ -11,7 +11,8 @@
 <header class="navbar">
     <div class="container">
         <div class="logo">VC's Obento</div>
-        <nav>
+        <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+        <nav id="nav-links">
             <a href="index.html">Home</a>
             <a href="faq.html">FAQs</a>
             <a href="order.html" class="btn">Order Now</a>
@@ -33,6 +34,12 @@
 <footer>
     <p>© 2025 VC's Obento</p>
 </footer>
+<script>
+    function toggleMenu() {
+      const nav = document.getElementById("nav-links");
+      nav.style.display = nav.style.display === "block" ? "none" : "block";
+    }
+</script>
 
 </body>
 </html>
